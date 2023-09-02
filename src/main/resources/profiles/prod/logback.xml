@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <!--项目名称，用于log名的前缀-->
+    <property name="PROJECT_NAME" value="CanalDbSync" />
+    <property name="SEVER_NAME" value="server" />
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+    <property name="LOG_HOME" value="/xdfapp/logs/${PROJECT_NAME}" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 默认配置为PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<conversionRule conversionWord="requestId" converterClass="com.noriental.utils.ParametersConvert" />-->
+
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${SEVER_NAME}-info.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+        </encoder>
+        <!-- 只输出level级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <!--日志按天备份-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-info.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${SEVER_NAME}-debug.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+        </encoder>
+        <!-- 只输出level级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <!--日志按天备份-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-debug.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${SEVER_NAME}-error.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+        </encoder>
+        <!-- 只输出level级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>warn</level>
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY </onMismatch>-->
+        </filter>
+        <!--日志按天备份-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-error.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+    </appender>
+    <!--SQL DEBUG-->
+    <appender name="SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${SEVER_NAME}-sql.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+        </encoder>
+        <!-- 只输出level级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <!--日志按天备份-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-sql.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="SLOW" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${SEVER_NAME}-slow.log</File>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class [%thread] [%X{id}] %msg%n</pattern>
+        </encoder>
+        <!--日志按天备份-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-slow.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+    </appender>
+    <!--统计-->
+    <!--    <appender name="statistics" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <File>${LOG_HOME}/${SEVER_NAME}-statistics.log</File>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+            </encoder>
+            &lt;!&ndash;日志按天备份&ndash;&gt;
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-statistics.log.%d{yyyy-MM-dd}</fileNamePattern>
+                &lt;!&ndash;日志文件保留天数&ndash;&gt;
+                <MaxHistory>30</MaxHistory>
+            </rollingPolicy>
+        </appender>
+        <logger name="com.noriental.interceptors.HttpRequestInterceptor" additivity="false">
+            <level value="info"/>
+            <appender-ref ref="statistics"/>
+        </logger>-->
+    <!--    <appender name="canalclient" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <File>${LOG_HOME}/${SEVER_NAME}-canalclient.log</File>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}] %msg%n</pattern>
+            </encoder>
+            &lt;!&ndash;日志按天备份&ndash;&gt;
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_HOME}/${SEVER_NAME}-canalclient.log.%d{yyyy-MM-dd}</fileNamePattern>
+                &lt;!&ndash;日志文件保留天数&ndash;&gt;
+                <MaxHistory>30</MaxHistory>
+            </rollingPolicy>
+        </appender>
+        <logger name="com.noriental.interceptors.HttpRequestInterceptor" additivity="false">
+            <level value="info"/>
+            <appender-ref ref="canalclient"/>
+        </logger>-->
+    <!--统计-Log print-->
+    <!--<appender name="log-statistics" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<File>${LOG_HOME}/${SEVER_NAME}-log-statistics.log</File>-->
+    <!--<encoder>-->
+    <!--<pattern>%d{yyyy-MM-dd HH:mm:ss} %level %class:%line [%thread] [%X{id}]  %msg%n</pattern>-->
+    <!--</encoder>-->
+    <!--&lt;!&ndash;日志按天备份&ndash;&gt;-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--<fileNamePattern>${LOG_HOME}/${SEVER_NAME}-log-statistics.log.%d{yyyy-MM-dd}</fileNamePattern>-->
+    <!--&lt;!&ndash;日志文件保留天数&ndash;&gt;-->
+    <!--<MaxHistory>30</MaxHistory>-->
+    <!--</rollingPolicy>-->
+    <!--</appender>-->
+    <!--<logger name="com.noriental.interceptors.LogPrintInterceptor" additivity="false">-->
+    <!--<level value="info"/>-->
+    <!--<appender-ref ref="log-statistics"/>-->
+    <!--</logger>-->
+    <logger name="com.noriental.sql" level="DEBUG">
+        <appender-ref ref="SQL" />
+    </logger>
+    <logger name="com.noriental.dao" level="DEBUG">
+        <appender-ref ref="SQL" />
+    </logger>
+    <logger name="com.alibaba.druid.filter.stat.StatFilter" level="ERROR" additivity="false">
+        <appender-ref ref="SLOW" />
+    </logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="INFO" />
+        <appender-ref ref="ERROR" />
+<!--        <appender-ref ref="DEBUG" />-->
+    </root>
+</configuration>
